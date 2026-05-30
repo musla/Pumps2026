@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⛵ Pumps 2026 – Všechny odkazy</title>
+<title>⛵ Pumps 2026 – Rozcestník</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--deep:#091622;--navy:#183558;--ocean:#1e5fa8;--gold:#c8a44a;--gold2:#f0d078;--foam:#ebf4f9;--white:#fff;--text:#162030;--muted:#647589;--border:#ccdde8;--sh:0 4px 18px rgba(9,22,34,.12);--r:16px;--rs:10px}
@@ -19,8 +19,17 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--foam);color:v
 .wave svg{display:block;width:100%}
 main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z-index:1}
 .card{background:var(--white);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh)}
-.ctitle{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:7px}
-.special-link{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--rs);text-decoration:none;color:var(--white);font-weight:700;font-size:.95rem;margin-bottom:10px;transition:opacity .15s,transform .15s;position:relative;overflow:hidden}
+.ctitle{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.cdesc{font-size:.82rem;color:var(--muted);line-height:1.5;margin-bottom:14px}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.how-item{background:var(--foam);border-radius:var(--rs);padding:12px 14px}
+.how-who{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.how-who.posadka{color:var(--ocean)}
+.how-who.admin{color:#7b3fa0}
+.how-who.all{color:var(--gold)}
+.how-steps{font-size:.8rem;color:var(--text);line-height:1.6}
+.how-steps li{margin-left:14px;margin-bottom:2px}
+.special-link{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--rs);text-decoration:none;color:var(--white);font-weight:700;font-size:.95rem;margin-bottom:10px;transition:opacity .15s,transform .15s}
 .special-link:last-child{margin-bottom:0}
 .special-link:hover{opacity:.9;transform:translateY(-1px)}
 .special-link.lb{background:linear-gradient(135deg,var(--deep),var(--navy))}
@@ -29,6 +38,10 @@ main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z
 .special-link .lbl{flex:1}
 .special-link .lbl small{display:block;font-weight:400;font-size:.75rem;opacity:.7;margin-top:2px}
 .special-link .arr{opacity:.5;font-size:1.1rem}
+.who-tag{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:99px;margin-top:6px}
+.who-tag.posadka{background:rgba(30,95,168,.18);color:#4a90d9}
+.who-tag.admin{background:rgba(123,63,160,.2);color:#9b5fc0}
+.who-tag.all{background:rgba(200,164,74,.2);color:#a07a20}
 .crew-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer}
 .crew-item:last-child{border-bottom:none}
 .crew-item:active{background:var(--foam);margin:0 -8px;padding:11px 8px;border-radius:8px}
@@ -39,6 +52,8 @@ main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z
 .copy-btn{background:none;border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:.75rem;font-weight:700;color:var(--navy);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:border-color .15s,background .15s}
 .copy-btn:hover{border-color:var(--ocean);background:var(--foam)}
 .copy-btn.ok{border-color:#2d8a4e;color:#2d8a4e}
+.note{background:#fffbe6;border:1.5px solid #f0d078;border-radius:var(--rs);padding:12px 14px;font-size:.82rem;color:#7a5800;line-height:1.5;margin-bottom:14px}
+.note strong{font-weight:700}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:10px 20px;border-radius:99px;font-size:.85rem;font-weight:600;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:999}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -47,29 +62,74 @@ main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z
 <header class="hdr">
   <span class="hdr-icon">⛵</span>
   <h1>Pumps 2026</h1>
-  <div class="sub">Rozcestník</div>
+  <div class="sub">Rozcestník · Tipovačka</div>
   <div class="wave"><svg viewBox="0 0 1440 54" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,27 C240,52 480,2 720,27 C960,52 1200,2 1440,27 L1440,54 L0,54 Z" fill="#ebf4f9"/></svg></div>
 </header>
 
 <main>
+
+  <!-- Jak to funguje -->
   <div class="card">
-    <div class="ctitle">🔗 Hlavní stránky</div>
+    <div class="ctitle">📖 Jak to funguje</div>
+    <div class="cdesc">Tipovačka pro regatu Pumps 2026 — každá posádka tipuje své pořadí v rozjízdách a sbírá body.</div>
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="how-who posadka">⛵ Posádka</div>
+        <ol class="how-steps">
+          <li>Otevřeš svůj odkaz</li>
+          <li>Zadáš výši sázky</li>
+          <li>Každý den do 12:00 tipy pořadí v rozjízdách</li>
+          <li>Po závodě vidíš výsledky a body</li>
+        </ol>
+      </div>
+      <div class="how-item">
+        <div class="how-who admin">⚙️ Admin</div>
+        <ol class="how-steps">
+          <li>Do 10:00 nastaví počet rozjízd</li>
+          <li>Po závodě zadá výsledky</li>
+          <li>Spravuje sázky posádek</li>
+          <li>Sleduje žebříček</li>
+        </ol>
+      </div>
+    </div>
+    <div class="note">
+      <strong>Bodování:</strong> přesné pořadí = 3 body &nbsp;·&nbsp; odchylka ±1 místo = 1 bod &nbsp;·&nbsp; jinak = 0 bodů
+    </div>
+  </div>
+
+  <!-- Hlavní stránky -->
+  <div class="card">
+    <div class="ctitle">🔗 Stránky aplikace</div>
+    <div class="cdesc">Tři různé pohledy podle role — posádka, admin, nebo veřejný žebříček.</div>
+
     <a href="leaderboard.html" class="special-link lb">
       <span class="ico">🏆</span>
-      <span class="lbl">Žebříček<small>Průběžné pořadí všech posádek</small></span>
+      <span class="lbl">
+        Žebříček
+        <small>Průběžné pořadí, počty bodů a celkový pot</small>
+        <span class="who-tag all">👁 pro všechny</span>
+      </span>
       <span class="arr">›</span>
     </a>
+
     <a href="admin.html" class="special-link adm">
       <span class="ico">⚙️</span>
-      <span class="lbl">Admin<small>Rozjízdy, výsledky, správa</small></span>
+      <span class="lbl">
+        Admin panel
+        <small>Rozjízdy · Výsledky · Sázky · Žebříček</small>
+        <span class="who-tag admin">🔐 pouze organizátor</span>
+      </span>
       <span class="arr">›</span>
     </a>
   </div>
 
+  <!-- Posádky -->
   <div class="card">
-    <div class="ctitle">⛵ Posádky</div>
+    <div class="ctitle">⛵ Odkazy posádek</div>
+    <div class="cdesc">Každá posádka má svůj unikátní odkaz. Kliknutím otevřeš stránku, tlačítkem zkopíruješ odkaz pro sdílení (WhatsApp, SMS…).</div>
     <div id="crews"></div>
   </div>
+
 </main>
 
 <div class="toast" id="toast">Odkaz zkopírován!</div>
