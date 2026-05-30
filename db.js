@@ -44,8 +44,12 @@ async function writeDb(db, sha, attempt = 0) {
       sha,
     }),
   });
-  if (r.status === 409 && attempt < 3) return writeDb(db, sha, attempt + 1);
-  if (!r.ok) { const e = await r.json(); throw new Error(e.message || r.status); }
+  if (!r.ok) {
+    const e = await r.json();
+    const isConflict = r.status === 409 || (r.status === 422 && (e.message || '').includes('does not match'));
+    if (isConflict && attempt < 3) return writeDb(db, sha, attempt + 1);
+    throw new Error(e.message || r.status);
+  }
   return true;
 }
 
