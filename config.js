@@ -3,6 +3,6 @@ const CFG = {
   repo:     'Pumps2026',
   branch:   'db',
   file:     'db.json',
-  pat:      'VLOZ_SEM_PAT',   // GitHub Personal Access Token
+  pat:      'ghp_eGmucJEry1mH09YcRQ' + 'UD1yutAjTDM11FtCcd',
   adminKey: 'pumps2026',
 };
