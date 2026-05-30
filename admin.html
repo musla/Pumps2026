@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pumps 2026 – Admin</title>
+<style>
+  :root {
+    --blue: #1a3a5c;
+    --blue-light: #2a5a8c;
+    --gold: #f0a500;
+    --green: #2d8a4e;
+    --red: #c0392b;
+    --bg: #f4f7fb;
+    --card: #fff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e2e8f0;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  header {
+    background: var(--blue);
+    color: #fff;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 { font-size: 1.3rem; font-weight: 800; }
+  header .badge { background: var(--gold); color: #000; font-weight: 700; font-size: 0.75rem; padding: 3px 10px; border-radius: 99px; }
+
+  main { max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  .card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--blue); }
+
+  .row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 12px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+  input, select {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 0.95rem;
+    outline: none;
+    background: #fff;
+    transition: border-color .2s;
+  }
+  input:focus, select:focus { border-color: var(--blue-light); }
+  input[type=number] { width: 90px; }
+  input[type=date] { width: 160px; }
+  input[type=password] { width: 220px; }
+
+  .btn {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn:hover { background: var(--blue-light); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-danger { background: var(--red); }
+  .btn-danger:hover { background: #a93226; }
+  .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+
+  .msg { font-size: 0.82rem; padding: 4px 0; }
+  .msg.ok { color: var(--green); }
+  .msg.err { color: var(--red); }
+
+  /* Results table */
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .results-table th {
+    background: var(--blue);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .results-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table tr:nth-child(even) td { background: #f8fafc; }
+  .results-table select { padding: 5px 8px; border-radius: 6px; width: 100px; }
+
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab {
+    padding: 9px 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s;
+  }
+  .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Leaderboard mini */
+  .lb-row {
+    display: flex;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+    font-size: 0.88rem;
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-rank { width: 28px; font-weight: 700; color: var(--muted); font-size: 0.95rem; }
+  .lb-rank.r1 { color: #c0a000; }
+  .lb-rank.r2 { color: #707070; }
+  .lb-rank.r3 { color: #7a4a20; }
+  .lb-name { flex: 1; font-weight: 600; }
+  .lb-boat { font-size: 0.78rem; color: var(--muted); }
+  .lb-pts { font-weight: 800; font-size: 1.05rem; color: var(--blue); }
+  .lb-detail { font-size: 0.75rem; color: var(--muted); }
+
+  /* Tip count badge */
+  .tip-badge {
+    display: inline-block;
+    background: #e8f0fe;
+    color: var(--blue-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-left: 6px;
+  }
+
+  #login-section { max-width: 360px; margin: 60px auto; }
+  #login-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: var(--blue); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⛵ Pumps 2026 – Admin</h1>
+  <span class="badge">ADMIN</span>
+</header>
+
+<main>
+  <div id="login-section" class="card" style="display:none">
+    <h2>Přihlášení</h2>
+    <div class="field" style="margin-bottom:12px">
+      <label>Admin klíč</label>
+      <input type="password" id="key-input" placeholder="Admin heslo" onkeydown="if(event.key==='Enter')login()" />
+    </div>
+    <button class="btn" onclick="login()">Přihlásit</button>
+    <div class="msg err" id="login-err" style="margin-top:8px"></div>
+  </div>
+
+  <div id="admin-panel" style="display:none">
+    <div class="tab-bar">
+      <button class="tab active" onclick="switchTab('races', this)">Rozjízdy</button>
+      <button class="tab" onclick="switchTab('results', this)">Výsledky</button>
+      <button class="tab" onclick="switchTab('board', this)">Žebříček</button>
+    </div>
+
+    <!-- RACES TAB -->
+    <div id="tab-races" class="tab-content active">
+      <div class="card">
+        <h2>Nastavit rozjízdy na den (do 10:00)</h2>
+        <div class="row">
+          <div class="field">
+            <label>Datum</label>
+            <input type="date" id="race-date" />
+          </div>
+          <div class="field">
+            <label>Počet rozjízd</label>
+            <input type="number" id="race-count" min="1" max="10" value="3" />
+          </div>
+          <button class="btn" onclick="setRaces()">Uložit</button>
+        </div>
+        <div class="msg" id="races-msg"></div>
+      </div>
+    </div>
+
+    <!-- RESULTS TAB -->
+    <div id="tab-results" class="tab-content">
+      <div class="card">
+        <h2>Zadání výsledků</h2>
+        <div class="row">
+          <div class="field">
+            <label>Datum</label>
+            <input type="date" id="res-date" onchange="loadDayData()" />
+          </div>
+          <button class="btn" onclick="loadDayData()">Načíst</button>
+        </div>
+        <div id="results-area"></div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD TAB -->
+    <div id="tab-board" class="tab-content">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <h2 style="margin:0">Průběžné pořadí</h2>
+          <button class="btn btn-sm" onclick="loadBoard()">Obnovit</button>
+        </div>
+        <div id="board-area"><p style="color:var(--muted);font-size:.88rem">Přepni na záložku pro načtení…</p></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script>
+let adminKey = '';
+let allCrews = [];
+
+async function api(params) {
+  const url = CFG.api + '?' + new URLSearchParams(params);
+  const r = await fetch(url);
+  return r.json();
+}
+
+function msg(id, text, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'msg ' + (type || '');
+}
+
+// ── Login ─────────────────────────────────────────────────────────────────────
+
+async function login() {
+  const key = document.getElementById('key-input').value.trim();
+  if (!key) return;
+
+  // Validate by trying to load data
+  const res = await api({ action: 'dayData', key, date: todayStr() });
+  if (res.error) {
+    document.getElementById('login-err').textContent = res.error;
+    return;
+  }
+
+  adminKey = key;
+  allCrews = res.crews;
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('admin-panel').style.display = 'block';
+
+  // Set default dates to today
+  const t = todayStr();
+  document.getElementById('race-date').value = t;
+  document.getElementById('res-date').value = t;
+}
+
+function todayStr() {
+  return new Date().toISOString().substring(0, 10);
+}
+
+// ── Tabs ─────────────────────────────────────────────────────────────────────
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'board') loadBoard();
+  if (name === 'results') loadDayData();
+}
+
+// ── Races ─────────────────────────────────────────────────────────────────────
+
+async function setRaces() {
+  const date = document.getElementById('race-date').value;
+  const count = +document.getElementById('race-count').value;
+  if (!date || !count) { msg('races-msg', 'Vyplň datum a počet.', 'err'); return; }
+
+  msg('races-msg', 'Ukládám…', '');
+  const res = await api({ action: 'setRaces', key: adminKey, date, count });
+  if (res.error) { msg('races-msg', res.error, 'err'); return; }
+  msg('races-msg', `✓ Nastaveno ${count} rozjízd na ${date}`, 'ok');
+}
+
+// ── Results ───────────────────────────────────────────────────────────────────
+
+async function loadDayData() {
+  const date = document.getElementById('res-date').value;
+  if (!date) return;
+
+  const area = document.getElementById('results-area');
+  area.innerHTML = '<p style="color:var(--muted);padding:10px 0;font-size:.88rem">Načítám…</p>';
+
+  const data = await api({ action: 'dayData', key: adminKey, date });
+  if (data.error) { area.innerHTML = `<p class="msg err">${data.error}</p>`; return; }
+
+  if (data.races.length === 0) {
+    area.innerHTML = '<p style="color:var(--muted);padding:10px 0;font-size:.88rem">Žádné rozjízdy pro tento den. Nastav je v záložce Rozjízdy.</p>';
+    return;
+  }
+
+  let html = '';
+  data.races.forEach(race => {
+    html += `<h3 style="margin:16px 0 8px;font-size:.9rem;color:var(--blue)">Rozjízda ${race.num}</h3>`;
+    html += `<table class="results-table"><thead><tr>
+      <th>Posádka</th><th>Loď</th><th>Pořadí</th><th></th>
+    </tr></thead><tbody>`;
+
+    data.crews.forEach(crew => {
+      const existing = data.results.find(r => r.race === race.id && r.crew === crew.id);
+      const tipCount = data.tips.filter(t => t.race === race.id && t.crew === crew.id).length;
+      const opts = ['<option value="">— nezadáno —</option>',
+        ...Array.from({length: 16}, (_, i) => i + 1)
+          .map(n => `<option value="${n}" ${existing?.pos === n ? 'selected' : ''}>${n}.</option>`)
+      ].join('');
+
+      html += `<tr>
+        <td><strong>${crew.name}</strong>${tipCount ? '<span class="tip-badge">✓ tip</span>' : ''}</td>
+        <td style="color:var(--muted)">${crew.boat}</td>
+        <td><select id="r-${race.id}-${crew.id}">${opts}</select></td>
+        <td>
+          <button class="btn btn-sm" onclick="saveResult('${race.id}','${crew.id}')">Uložit</button>
+          <span class="msg" id="rm-${race.id}-${crew.id}"></span>
+        </td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+  });
+
+  area.innerHTML = html;
+}
+
+async function saveResult(raceId, crewId) {
+  const pos = +document.getElementById(`r-${raceId}-${crewId}`).value;
+  const msgId = `rm-${raceId}-${crewId}`;
+  if (!pos) { msg(msgId, 'Vyber pořadí.', 'err'); return; }
+
+  msg(msgId, '…', '');
+  const res = await api({ action: 'setResult', key: adminKey, race: raceId, crew: crewId, pos });
+  if (res.error) { msg(msgId, res.error, 'err'); }
+  else { msg(msgId, '✓', 'ok'); }
+}
+
+// ── Leaderboard ───────────────────────────────────────────────────────────────
+
+async function loadBoard() {
+  const area = document.getElementById('board-area');
+  area.innerHTML = '<p style="color:var(--muted);font-size:.88rem">Načítám…</p>';
+
+  const data = await api({ action: 'board' });
+  if (data.error) { area.innerHTML = `<p class="msg err">${data.error}</p>`; return; }
+
+  const pot = data.pot ? `<p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Celkový pot: <strong>${data.pot.toLocaleString('cs-CZ')} Kč</strong></p>` : '';
+
+  const rows = data.board.map((c, i) => {
+    const rank = i + 1;
+    const cls = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : '';
+    return `<div class="lb-row">
+      <div class="lb-rank ${cls}">${rank}.</div>
+      <div style="flex:1">
+        <div class="lb-name">${c.name}</div>
+        <div class="lb-boat">${c.boat}${c.bet ? ' · sázka: ' + c.bet.toLocaleString('cs-CZ') + ' Kč' : ''}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="lb-pts">${c.pts} b.</div>
+        <div class="lb-detail">${c.tipped} tipů · ${c.exact}× přesně</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  area.innerHTML = pot + rows;
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+
+document.getElementById('login-section').style.display = 'block';
+</script>
+</body>
+</html>
