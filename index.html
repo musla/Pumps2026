@@ -17,7 +17,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--foam);color:v
 .hdr .sub{font-size:.8rem;opacity:.6;letter-spacing:3px;text-transform:uppercase;margin-top:5px;position:relative}
 .wave{position:absolute;bottom:-1px;left:0;width:100%;line-height:0}
 .wave svg{display:block;width:100%}
-.crew-strip{background:var(--navy);color:#fff;padding:12px 20px 46px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;position:relative}
+.crew-strip{background:var(--navy);color:#fff;padding:12px 16px 46px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;position:relative}
 .crew-strip::after{content:'';position:absolute;bottom:0;left:0;right:0;height:36px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 36'%3E%3Cpath d='M0,18 C200,34 400,2 600,18 C800,34 1000,2 1200,18 L1200,36 L0,36 Z' fill='%23ebf4f9'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
 .cnm{font-weight:700;font-size:1.05rem}.cbt{font-size:.8rem;opacity:.72;margin-top:2px}
 .bet-pill{background:var(--gold);color:var(--deep);font-weight:800;font-size:.82rem;padding:5px 14px;border-radius:99px;white-space:nowrap}
@@ -36,9 +36,9 @@ main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z
 .chip{font-size:.76rem;font-weight:700;padding:3px 11px;border-radius:99px}
 .chip.exact{background:#d4f0e2;color:#1a5c36}.chip.near{background:#fff0cc;color:#7a5200}
 .chip.miss{background:#fbd8d8;color:#7a1a1a}.chip.wait{background:var(--border);color:var(--muted)}
-.pr{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.pl{font-size:.83rem;color:var(--muted);white-space:nowrap}
-.ps{border:2px solid var(--border);border-radius:9px;padding:8px 12px;font-size:.95rem;font-weight:600;outline:none;cursor:pointer;background:#fff;color:var(--text);transition:border-color .2s;min-width:150px}
+.pr{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+.pl{font-size:.83rem;color:var(--muted)}
+.ps{border:2px solid var(--border);border-radius:9px;padding:10px 12px;font-size:1rem;font-weight:600;outline:none;cursor:pointer;background:#fff;color:var(--text);transition:border-color .2s;width:100%;-webkit-appearance:none;appearance:none}
 .ps:focus{border-color:var(--ocean)}.ps:disabled{background:var(--foam);opacity:.7;cursor:default}
 .si{font-size:.8rem;font-weight:700}
 .ri-res{font-size:.82rem;margin-top:8px;display:flex;gap:16px;flex-wrap:wrap}
@@ -52,12 +52,12 @@ main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z
 .btn-gold{background:var(--gold);color:var(--deep)}.btn-gold:hover{background:var(--gold2);color:var(--deep)}
 .nav-link{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--white);color:var(--navy);border-radius:var(--r);padding:14px;text-decoration:none;font-weight:700;font-size:.92rem;box-shadow:var(--sh);margin-bottom:14px;transition:transform .15s,box-shadow .15s}
 .nav-link:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(9,22,34,.2)}
-.bet-callout{background:linear-gradient(145deg,#f7f3ec,#fff);border:2px solid var(--border);border-radius:var(--r);padding:32px 24px;text-align:center;box-shadow:var(--sh)}
-.bet-callout .ico{font-size:3.2rem;margin-bottom:12px}
-.bet-callout h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:10px}
-.bet-callout p{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:22px}
-.betr{display:flex;gap:8px;max-width:260px;margin:0 auto}
-.betr input{flex:1;border:2px solid var(--border);border-radius:10px;padding:10px 13px;font-size:1.1rem;font-weight:700;outline:none;text-align:center;transition:border-color .2s}
+.bet-callout{background:linear-gradient(145deg,#f7f3ec,#fff);border:2px solid var(--border);border-radius:var(--r);padding:24px 18px;text-align:center;box-shadow:var(--sh)}
+.bet-callout .ico{font-size:3rem;margin-bottom:10px}
+.bet-callout h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--navy);margin-bottom:10px}
+.bet-callout p{color:var(--muted);font-size:.88rem;line-height:1.6;margin-bottom:20px}
+.betr{display:flex;gap:8px;max-width:100%;margin:0 auto}
+.betr input{flex:1;border:2px solid var(--border);border-radius:10px;padding:12px 13px;font-size:1.1rem;font-weight:700;outline:none;text-align:center;transition:border-color .2s;min-width:0}
 .betr input:focus{border-color:var(--ocean)}
 .spin-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted);font-size:.87rem}
 .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--ocean);border-radius:50%;animation:spin .8s linear infinite}
@@ -142,7 +142,7 @@ function renderMain({ canTip, nowHour, races }) {
   if (canTip) {
     const s = (12*3600)-(now.getHours()*3600+now.getMinutes()*60+now.getSeconds());
     const h=Math.floor(s/3600), m=Math.floor((s%3600)/60);
-    statusHtml = `<div class="status open"><div class="dot g"></div><span>Tipování otevřeno · zavírá za <strong id="cdwn">${h?h+'h ':'' }${m}m</strong></span></div>`;
+    statusHtml = `<div class="status open"><div class="dot g"></div><span>Tipování otevřeno · zavírá za <strong id="cdwn">${h?h+'h ':''  }${m}m</strong></span></div>`;
   } else {
     statusHtml = `<div class="status closed"><div class="dot r"></div><span>Tipování uzavřeno (po 12:00)</span></div>`;
   }
