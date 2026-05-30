@@ -84,6 +84,7 @@ input[type=password]{width:auto;min-width:200px}
     <div class="tabs">
       <button class="tab active" onclick="sw('races',this)">⛵ Rozjízdy</button>
       <button class="tab" onclick="sw('results',this)">📋 Výsledky</button>
+      <button class="tab" onclick="sw('bets',this)">💰 Sázky</button>
       <button class="tab" onclick="sw('board',this)">🏆 Žebříček</button>
     </div>
 
@@ -107,6 +108,16 @@ input[type=password]{width:auto;min-width:200px}
           <button class="btn" onclick="loadDay()">Načíst</button>
         </div>
         <div id="ra"></div>
+      </div>
+    </div>
+
+    <div id="tp-bets" class="tp">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="ctitle" style="margin:0">💰 Sázky posádek</div>
+          <button class="btn btn-outline btn-sm" onclick="loadBets()">↻</button>
+        </div>
+        <div id="bta"><p style="color:var(--muted);font-size:.88rem">Přepni na záložku…</p></div>
       </div>
     </div>
 
@@ -149,6 +160,7 @@ function sw(name,btn){
   btn.classList.add('active'); $('tp-'+name).classList.add('active');
   if(name==='board')loadBoard();
   if(name==='results')loadDay();
+  if(name==='bets')loadBets();
 }
 
 async function setRaces(){
@@ -195,6 +207,39 @@ async function saveRes(raceId,crewId){
   try{
     const r=await adminSetResult(KEY,raceId,crewId,pos);
     r.error?(me.textContent='✗ '+r.error,me.style.color='var(--red)'):(me.textContent='✓',me.style.color='var(--green)');
+  }catch(e){me.textContent='✗';me.style.color='var(--red)';}
+}
+
+async function loadBets(){
+  const bta=$('bta'); bta.innerHTML='<div class="spin-wrap"><div class="spinner"></div><span>Načítám…</span></div>';
+  try{
+    const d=await adminGetBets(KEY);
+    if(d.error){bta.innerHTML=`<div class="alert err">${d.error}</div>`;return;}
+    const total=d.crews.reduce((s,c)=>s+(c.bet||0),0);
+    const potHtml=`<div style="background:linear-gradient(135deg,var(--deep),var(--navy));color:#fff;border-radius:var(--rs);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:1px">Celkový pot</span>
+      <span style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold)">${total.toLocaleString('cs-CZ')} Kč</span>
+    </div>`;
+    const rows=d.crews.map(c=>`
+      <tr>
+        <td><strong>${c.name}</strong></td>
+        <td style="color:var(--muted);font-size:.82rem">${c.boat}</td>
+        <td><input type="number" id="bet-${c.id}" value="${c.bet||''}" min="0" placeholder="—" style="width:110px;padding:6px 10px;font-size:.9rem;border:1.5px solid var(--border);border-radius:8px;outline:none" onfocus="this.style.borderColor='var(--ocean)'" onblur="this.style.borderColor='var(--border)'" /></td>
+        <td>
+          <button class="btn btn-sm" onclick="saveBet('${c.id}')">Uložit</button>
+          <span id="bm-${c.id}" style="font-size:.78rem;margin-left:5px"></span>
+        </td>
+      </tr>`).join('');
+    bta.innerHTML=potHtml+`<div style="overflow-x:auto"><table class="adm-tbl"><thead><tr><th>Posádka</th><th>Loď</th><th>Sázka (Kč)</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }catch(e){bta.innerHTML=`<div class="alert err">${e.message}</div>`;}
+}
+
+async function saveBet(crewId){
+  const inp=$(`bet-${crewId}`), me=$(`bm-${crewId}`);
+  me.textContent='…'; me.style.color='var(--muted)';
+  try{
+    const r=await adminSetBet(KEY,crewId,inp.value||'0');
+    r.error?(me.textContent='✗ '+r.error,me.style.color='var(--red)'):(me.textContent='✓',me.style.color='var(--green)',setTimeout(()=>me.textContent='',2500));
   }catch(e){me.textContent='✗';me.style.color='var(--red)';}
 }
 
