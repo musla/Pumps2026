@@ -141,6 +141,24 @@ async function adminSetResult(key, raceId, crewId, pos) {
   return { ok: true };
 }
 
+async function adminSetBet(key, crewId, amount) {
+  if (key !== CFG.adminKey) return { error: 'Neplatný klíč.' };
+  const amt = parseFloat(amount);
+  if (isNaN(amt) || amt < 0) return { error: 'Zadej platnou částku (0 = smazat).' };
+  const { db, sha } = await readDb();
+  const idx = db.posadky.findIndex(p => p.id === crewId);
+  if (idx < 0) return { error: 'Posádka nenalezena.' };
+  db.posadky[idx].bet = amt > 0 ? amt : null;
+  await writeDb(db, sha);
+  return { ok: true };
+}
+
+async function adminGetBets(key) {
+  if (key !== CFG.adminKey) return { error: 'Neplatný klíč.' };
+  const { db } = await readDb();
+  return { crews: db.posadky };
+}
+
 async function adminGetDay(key, date) {
   if (key !== CFG.adminKey) return { error: 'Neplatný klíč.' };
   const { db } = await readDb();
