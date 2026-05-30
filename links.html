@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⛵ Pumps 2026 – Všechny odkazy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#091622;--navy:#183558;--ocean:#1e5fa8;--gold:#c8a44a;--gold2:#f0d078;--foam:#ebf4f9;--white:#fff;--text:#162030;--muted:#647589;--border:#ccdde8;--sh:0 4px 18px rgba(9,22,34,.12);--r:16px;--rs:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--foam);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.hdr{background:linear-gradient(160deg,var(--deep) 0%,var(--navy) 55%,#204878 100%);color:#fff;padding:32px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
+.hdr-icon{font-size:2.8rem;display:block;margin-bottom:8px;animation:bob 4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+.hdr h1{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:900;text-shadow:0 2px 16px rgba(0,0,0,.4);position:relative}
+.hdr .sub{font-size:.8rem;opacity:.6;letter-spacing:3px;text-transform:uppercase;margin-top:5px;position:relative}
+.wave{position:absolute;bottom:-1px;left:0;width:100%;line-height:0}
+.wave svg{display:block;width:100%}
+main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z-index:1}
+.card{background:var(--white);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh)}
+.ctitle{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.special-link{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--rs);text-decoration:none;color:var(--white);font-weight:700;font-size:.95rem;margin-bottom:10px;transition:opacity .15s,transform .15s;position:relative;overflow:hidden}
+.special-link:last-child{margin-bottom:0}
+.special-link:hover{opacity:.9;transform:translateY(-1px)}
+.special-link.lb{background:linear-gradient(135deg,var(--deep),var(--navy))}
+.special-link.adm{background:linear-gradient(135deg,#4a1e6e,#7b3fa0)}
+.special-link .ico{font-size:1.6rem;flex-shrink:0}
+.special-link .lbl{flex:1}
+.special-link .lbl small{display:block;font-weight:400;font-size:.75rem;opacity:.7;margin-top:2px}
+.special-link .arr{opacity:.5;font-size:1.1rem}
+.crew-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.crew-item:last-child{border-bottom:none}
+.crew-item:active{background:var(--foam);margin:0 -8px;padding:11px 8px;border-radius:8px}
+.crew-num{width:32px;height:32px;border-radius:50%;background:var(--foam);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0}
+.crew-info{flex:1;min-width:0}
+.crew-name{font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crew-boat{font-size:.75rem;color:var(--muted);margin-top:1px}
+.copy-btn{background:none;border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:.75rem;font-weight:700;color:var(--navy);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:border-color .15s,background .15s}
+.copy-btn:hover{border-color:var(--ocean);background:var(--foam)}
+.copy-btn.ok{border-color:#2d8a4e;color:#2d8a4e}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:10px 20px;border-radius:99px;font-size:.85rem;font-weight:600;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <span class="hdr-icon">⛵</span>
+  <h1>Pumps 2026</h1>
+  <div class="sub">Rozcestník</div>
+  <div class="wave"><svg viewBox="0 0 1440 54" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,27 C240,52 480,2 720,27 C960,52 1200,2 1440,27 L1440,54 L0,54 Z" fill="#ebf4f9"/></svg></div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="ctitle">🔗 Hlavní stránky</div>
+    <a href="leaderboard.html" class="special-link lb">
+      <span class="ico">🏆</span>
+      <span class="lbl">Žebříček<small>Průběžné pořadí všech posádek</small></span>
+      <span class="arr">›</span>
+    </a>
+    <a href="admin.html" class="special-link adm">
+      <span class="ico">⚙️</span>
+      <span class="lbl">Admin<small>Rozjízdy, výsledky, správa</small></span>
+      <span class="arr">›</span>
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">⛵ Posádky</div>
+    <div id="crews"></div>
+  </div>
+</main>
+
+<div class="toast" id="toast">Odkaz zkopírován!</div>
+
+<script src="config.js"></script>
+<script>
+const BASE = location.origin + location.pathname.replace('links.html', '');
+
+const crews = [
+  {id:'P01',name:'Polyněšti Tygři',boat:'NABU',token:'nabu26'},
+  {id:'P02',name:'Keraservis',boat:'IO',token:'io26ker'},
+  {id:'P03',name:'Ebm, Výběr z hroznů',boat:'DIA',token:'dia26ebm'},
+  {id:'P04',name:'Hinton',boat:'KORE',token:'kore26hi'},
+  {id:'P05',name:'ELOS Sailing team',boat:'METIS',token:'metis26e'},
+  {id:'P06',name:'Lumeni',boat:'JANUS',token:'janus26l'},
+  {id:'P07',name:'Avrio',boat:'MILKY WAY',token:'milky26a'},
+  {id:'P08',name:'Legends sailing team',boat:'CERES',token:'ceres26l'},
+  {id:'P09',name:'Invin',boat:'KETU',token:'ketu26in'},
+  {id:'P10',name:'Kopyta z Brna',boat:'ELARA',token:'elara26k'},
+  {id:'P11',name:'Twinky Holky',boat:'NEBULA',token:'nebul26t'},
+  {id:'P12',name:'Ebm, Men over board',boat:'ALBEDO',token:'albed26m'},
+  {id:'P13',name:'Futura racing team',boat:'CALISTO',token:'calis26f'},
+  {id:'P14',name:'Lokomotiva ČB',boat:'MONDO',token:'mondo26l'},
+  {id:'P15',name:'OHLA ŽS',boat:'ERIS',token:'eris26oh'},
+  {id:'P16',name:'HY Racing',boat:'MIMAS',token:'mimas26h'},
+];
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function copyUrl(token, btn) {
+  const url = BASE + 'index.html?token=' + token;
+  navigator.clipboard.writeText(url).then(() => {
+    btn.textContent = '✓ OK';
+    btn.classList.add('ok');
+    showToast('Odkaz zkopírován!');
+    setTimeout(() => { btn.textContent = 'Kopírovat'; btn.classList.remove('ok'); }, 2000);
+  }).catch(() => {
+    prompt('Zkopíruj tento odkaz:', url);
+  });
+}
+
+function openCrew(token) {
+  window.open(BASE + 'index.html?token=' + token, '_blank');
+}
+
+const container = document.getElementById('crews');
+container.innerHTML = crews.map((c, i) => `
+  <div class="crew-item" onclick="openCrew('${c.token}')">
+    <div class="crew-num">${i+1}</div>
+    <div class="crew-info">
+      <div class="crew-name">${c.name}</div>
+      <div class="crew-boat">⛵ ${c.boat}</div>
+    </div>
+    <button class="copy-btn" onclick="event.stopPropagation();copyUrl('${c.token}',this)">Kopírovat</button>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
