@@ -3,489 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pumps 2026 – Tipovačka</title>
+<title>⛵ Pumps 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #1a3a5c;
-    --blue-light: #2a5a8c;
-    --gold: #f0a500;
-    --green: #2d8a4e;
-    --red: #c0392b;
-    --bg: #f4f7fb;
-    --card: #fff;
-    --text: #1a1a2e;
-    --muted: #6b7280;
-    --border: #e2e8f0;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  header {
-    background: var(--blue);
-    color: #fff;
-    padding: 20px 24px 16px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
-  header .sub { font-size: 0.85rem; opacity: 0.7; margin-top: 2px; }
-
-  .crew-badge {
-    background: var(--blue-light);
-    color: #fff;
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .crew-badge .name { font-weight: 700; font-size: 1.05rem; }
-  .crew-badge .boat { font-size: 0.82rem; opacity: 0.8; }
-  .crew-badge .bet-chip {
-    background: var(--gold);
-    color: #1a1a1a;
-    font-weight: 700;
-    font-size: 0.82rem;
-    padding: 4px 12px;
-    border-radius: 99px;
-  }
-
-  main { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
-
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.08);
-  }
-  .card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--blue); }
-
-  /* Bet form */
-  .bet-form { display: flex; flex-direction: column; gap: 12px; }
-  .bet-form p { font-size: 0.92rem; color: var(--muted); line-height: 1.5; }
-  .input-row { display: flex; gap: 10px; }
-  .input-row input {
-    flex: 1;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color .2s;
-  }
-  .input-row input:focus { border-color: var(--blue-light); }
-
-  .btn {
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 11px 20px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background .15s;
-    white-space: nowrap;
-  }
-  .btn:hover { background: var(--blue-light); }
-  .btn:disabled { opacity: .5; cursor: not-allowed; }
-  .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
-
-  /* Status banner */
-  .status-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #fff8e6;
-    border: 1px solid #f0c040;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 0.88rem;
-    color: #7a5200;
-    margin-bottom: 16px;
-  }
-  .status-bar.open { background: #edfdf4; border-color: #6bcf9f; color: #1a5c36; }
-  .status-bar.closed { background: #fef0f0; border-color: #f0a0a0; color: #7a1a1a; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .dot.green { background: #2d8a4e; }
-  .dot.red { background: var(--red); }
-  .dot.orange { background: var(--gold); }
-
-  /* Race card */
-  .race-item {
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .race-item:last-child { margin-bottom: 0; }
-  .race-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .race-title { font-weight: 700; font-size: 0.95rem; }
-  .points-chip {
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 99px;
-  }
-  .points-3 { background: #d4edda; color: #1a5c36; }
-  .points-1 { background: #fff3cd; color: #7a5200; }
-  .points-0 { background: #f8d7da; color: #7a1a1a; }
-  .points-null { background: #e9ecef; color: var(--muted); }
-
-  .tip-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .tip-row label { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
-  .pos-select {
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 10px;
-    font-size: 0.95rem;
-    outline: none;
-    cursor: pointer;
-    background: #fff;
-    transition: border-color .2s;
-    min-width: 80px;
-  }
-  .pos-select:focus { border-color: var(--blue-light); }
-  .pos-select:disabled { background: #f8f9fa; cursor: default; }
-
-  .result-row {
-    margin-top: 8px;
-    font-size: 0.85rem;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .result-row span { display: flex; align-items: center; gap: 5px; }
-  .lbl { color: var(--muted); }
-
-  /* Score summary */
-  .score-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    text-align: center;
-  }
-  .score-item { padding: 12px 8px; }
-  .score-num { font-size: 2rem; font-weight: 800; color: var(--blue); line-height: 1; }
-  .score-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
-
-  /* Loading / error */
-  .spinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 20px;
-  }
-  .spin {
-    width: 40px; height: 40px;
-    border: 4px solid var(--border);
-    border-top-color: var(--blue);
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .error-box {
-    background: #fef0f0;
-    border: 1.5px solid #f0a0a0;
-    border-radius: var(--radius);
-    padding: 24px;
-    text-align: center;
-    color: #7a1a1a;
-  }
-  .error-box h3 { margin-bottom: 8px; }
-
-  .no-races {
-    text-align: center;
-    padding: 30px 16px;
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  .save-msg {
-    font-size: 0.8rem;
-    color: var(--green);
-    margin-left: 6px;
-  }
-
-  .leaderboard-link {
-    display: block;
-    text-align: center;
-    padding: 12px;
-    background: var(--blue);
-    color: #fff;
-    border-radius: var(--radius);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 16px;
-  }
-  .leaderboard-link:hover { background: var(--blue-light); }
-
-  .countdown { font-weight: 700; }
+:root{--deep:#091622;--navy:#183558;--ocean:#1e5fa8;--gold:#c8a44a;--gold2:#f0d078;--foam:#ebf4f9;--white:#fff;--text:#162030;--muted:#647589;--border:#ccdde8;--green:#1e7a44;--red:#b83030;--sh:0 4px 18px rgba(9,22,34,.12);--r:16px;--rs:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--foam);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.hdr{background:linear-gradient(160deg,var(--deep) 0%,var(--navy) 55%,#204878 100%);color:#fff;padding:32px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
+.hdr-icon{font-size:2.8rem;display:block;margin-bottom:8px;animation:bob 4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+.hdr h1{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:900;text-shadow:0 2px 16px rgba(0,0,0,.4);position:relative}
+.hdr .sub{font-size:.8rem;opacity:.6;letter-spacing:3px;text-transform:uppercase;margin-top:5px;position:relative}
+.wave{position:absolute;bottom:-1px;left:0;width:100%;line-height:0}
+.wave svg{display:block;width:100%}
+.crew-strip{background:var(--navy);color:#fff;padding:12px 20px 46px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;position:relative}
+.crew-strip::after{content:'';position:absolute;bottom:0;left:0;right:0;height:36px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 36'%3E%3Cpath d='M0,18 C200,34 400,2 600,18 C800,34 1000,2 1200,18 L1200,36 L0,36 Z' fill='%23ebf4f9'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
+.cnm{font-weight:700;font-size:1.05rem}.cbt{font-size:.8rem;opacity:.72;margin-top:2px}
+.bet-pill{background:var(--gold);color:var(--deep);font-weight:800;font-size:.82rem;padding:5px 14px;border-radius:99px;white-space:nowrap}
+main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z-index:1}
+.card{background:var(--white);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh)}
+.ctitle{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.status{display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:var(--rs);font-size:.87rem;font-weight:500;margin-bottom:14px;border:1.5px solid}
+.status.open{background:#e6f7ee;color:#1a5c36;border-color:#88d4a8}
+.status.closed{background:#fbeaea;color:#7a1a1a;border-color:#e8a0a0}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dot.g{background:#2d8a4e}.dot.r{background:#c0392b}
+.ri{border:1.5px solid var(--border);border-radius:var(--rs);padding:14px;margin-bottom:10px;transition:border-color .2s}
+.ri:last-child{margin-bottom:0}.ri:focus-within{border-color:var(--ocean)}
+.rihdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rinum{font-weight:700;color:var(--navy)}
+.chip{font-size:.76rem;font-weight:700;padding:3px 11px;border-radius:99px}
+.chip.exact{background:#d4f0e2;color:#1a5c36}.chip.near{background:#fff0cc;color:#7a5200}
+.chip.miss{background:#fbd8d8;color:#7a1a1a}.chip.wait{background:var(--border);color:var(--muted)}
+.pr{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pl{font-size:.83rem;color:var(--muted);white-space:nowrap}
+.ps{border:2px solid var(--border);border-radius:9px;padding:8px 12px;font-size:.95rem;font-weight:600;outline:none;cursor:pointer;background:#fff;color:var(--text);transition:border-color .2s;min-width:150px}
+.ps:focus{border-color:var(--ocean)}.ps:disabled{background:var(--foam);opacity:.7;cursor:default}
+.si{font-size:.8rem;font-weight:700}
+.ri-res{font-size:.82rem;margin-top:8px;display:flex;gap:16px;flex-wrap:wrap}
+.ri-res .l{color:var(--muted)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.sc{padding:14px 6px;background:var(--foam);border-radius:var(--rs)}
+.sn{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--navy);line-height:1}
+.sl{font-size:.7rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:.95rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .15s,transform .1s}
+.btn:hover{background:var(--ocean);transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-gold{background:var(--gold);color:var(--deep)}.btn-gold:hover{background:var(--gold2);color:var(--deep)}
+.nav-link{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--white);color:var(--navy);border-radius:var(--r);padding:14px;text-decoration:none;font-weight:700;font-size:.92rem;box-shadow:var(--sh);margin-bottom:14px;transition:transform .15s,box-shadow .15s}
+.nav-link:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(9,22,34,.2)}
+.bet-callout{background:linear-gradient(145deg,#f7f3ec,#fff);border:2px solid var(--border);border-radius:var(--r);padding:32px 24px;text-align:center;box-shadow:var(--sh)}
+.bet-callout .ico{font-size:3.2rem;margin-bottom:12px}
+.bet-callout h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:10px}
+.bet-callout p{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:22px}
+.betr{display:flex;gap:8px;max-width:260px;margin:0 auto}
+.betr input{flex:1;border:2px solid var(--border);border-radius:10px;padding:10px 13px;font-size:1.1rem;font-weight:700;outline:none;text-align:center;transition:border-color .2s}
+.betr input:focus{border-color:var(--ocean)}
+.spin-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted);font-size:.87rem}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--ocean);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-box{background:#fff;border-radius:var(--r);padding:36px 24px;text-align:center;box-shadow:var(--sh)}
+.err-box .ico{font-size:3rem;margin-bottom:12px}
+.err-box h3{font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:8px;font-size:1.3rem}
+.err-box p{color:var(--muted);font-size:.9rem;line-height:1.6}
+.alert{padding:10px 14px;border-radius:var(--rs);font-size:.86rem;margin-top:8px}
+.alert.err{background:#fbeaea;color:var(--red)}.hidden{display:none}
+.empty{text-align:center;padding:30px 16px}.empty .ico{font-size:2.5rem;margin-bottom:10px}
+.empty p{color:var(--muted);font-size:.9rem;line-height:1.6}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>⛵ Pumps 2026</h1>
+<header class="hdr">
+  <span class="hdr-icon">⛵</span>
+  <h1>Pumps 2026</h1>
   <div class="sub">Tipovačka regaty</div>
+  <div class="wave"><svg viewBox="0 0 1440 54" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,27 C240,52 480,2 720,27 C960,52 1200,2 1440,27 L1440,54 L0,54 Z" fill="#ebf4f9"/></svg></div>
 </header>
 
-<div id="crew-badge" style="display:none" class="crew-badge">
-  <div>
-    <div class="name" id="crew-name"></div>
-    <div class="boat" id="crew-boat"></div>
-  </div>
-  <div class="bet-chip" id="crew-bet"></div>
+<div id="strip" class="crew-strip hidden">
+  <div><div class="cnm" id="el-nm"></div><div class="cbt" id="el-bt"></div></div>
+  <div id="el-bet" class="bet-pill hidden"></div>
 </div>
 
-<main>
-  <div id="app">
-    <div class="spinner"><div class="spin"></div></div>
-  </div>
-</main>
+<main><div id="app"><div class="spin-wrap"><div class="spinner"></div><span>Načítám…</span></div></div></main>
 
 <script src="config.js"></script>
+<script src="db.js"></script>
 <script>
 const token = new URLSearchParams(location.search).get('token');
-let crewData = null;
+const $ = id => document.getElementById(id);
+const render = h => $('app').innerHTML = h;
 
-async function api(params) {
-  const url = CFG.api + '?' + new URLSearchParams(params);
-  const r = await fetch(url);
-  return r.json();
-}
-
-function render(html) {
-  document.getElementById('app').innerHTML = html;
-}
-
-function pos(n) {
-  return n ? n + '. místo' : '—';
-}
-
-function pointsChip(p) {
-  if (p === null || p === undefined) return '<span class="points-chip points-null">čeká se</span>';
-  const cls = p === 3 ? 'points-3' : p === 1 ? 'points-1' : 'points-0';
-  const lbl = p === 3 ? '🎯 +3 body' : p === 1 ? '±1 | +1 bod' : '0 bodů';
-  return `<span class="points-chip ${cls}">${lbl}</span>`;
+function chip(p) {
+  if (p == null) return '<span class="chip wait">čeká se</span>';
+  if (p === 3)   return '<span class="chip exact">🎯 Přesně! +3&thinsp;b</span>';
+  if (p === 1)   return '<span class="chip near">±1 místo +1&thinsp;b</span>';
+  return '<span class="chip miss">0 bodů</span>';
 }
 
 async function init() {
-  if (!token) {
-    render('<div class="error-box"><h3>Chybí token</h3><p>Použij odkaz, který jsi dostal od organizátora.</p></div>');
-    return;
-  }
-
-  const today = new Date().toISOString().substring(0, 10);
-  const data = await api({ action: 'tips', token, date: today });
-
-  if (data.error) {
-    render(`<div class="error-box"><h3>Chyba</h3><p>${data.error}</p></div>`);
-    return;
-  }
-
-  crewData = data.crew;
-
-  // Update header badge
-  document.getElementById('crew-name').textContent = crewData.name;
-  document.getElementById('crew-boat').textContent = '⛵ ' + crewData.boat;
-  document.getElementById('crew-badge').style.display = 'flex';
-
-  if (!crewData.bet) {
-    renderBetForm();
-    return;
-  }
-
-  document.getElementById('crew-bet').textContent = crewData.bet.toLocaleString('cs-CZ') + ' Kč';
-
-  renderMain(data);
+  if (!token) { render('<div class="err-box"><div class="ico">⚓</div><h3>Odkaz není platný</h3><p>Použij odkaz od organizátora.</p></div>'); return; }
+  try {
+    const data = await getCrewPage(token);
+    if (data.error) { render(`<div class="err-box"><div class="ico">🌊</div><h3>Chyba</h3><p>${data.error}</p></div>`); return; }
+    $('el-nm').textContent = data.crew.name;
+    $('el-bt').textContent = '⛵ ' + data.crew.boat;
+    $('strip').classList.remove('hidden');
+    if (data.crew.bet) { const b=$('el-bet'); b.textContent=Number(data.crew.bet).toLocaleString('cs-CZ')+' Kč'; b.classList.remove('hidden'); }
+    data.crew.bet ? renderMain(data) : renderBet(data.crew);
+  } catch(e) { render(`<div class="err-box"><div class="ico">🌊</div><h3>Chyba spojení</h3><p>${e.message}</p></div>`); }
 }
 
-function renderBetForm() {
-  render(`
-    <div class="card">
-      <h2>Zadat sázku</h2>
-      <div class="bet-form">
-        <p>Vítej, <strong>${crewData.name}</strong>! Nejdříve zadej svoji sázku.<br>
-        Částku nelze po potvrzení změnit.</p>
-        <div class="input-row">
-          <input type="number" id="bet-input" min="1" placeholder="Částka v Kč" />
-          <button class="btn" onclick="submitBet()">Potvrdit</button>
-        </div>
-        <div id="bet-msg" style="font-size:.85rem;color:var(--red)"></div>
-      </div>
-    </div>
-  `);
+function renderBet(crew) {
+  render(`<div class="bet-callout">
+    <div class="ico">💰</div>
+    <h2>Zadej svoji sázku</h2>
+    <p>Vítej, <strong>${crew.name}</strong>!<br>Zadej výši své sázky před tipováním.<br><em>Nelze po potvrzení změnit.</em></p>
+    <div class="betr"><input type="number" id="bi" min="1" placeholder="Kč" /><button class="btn btn-gold" onclick="submitBet()">Potvrdit</button></div>
+    <div id="bm" class="alert err hidden"></div>
+  </div>`);
 }
 
 async function submitBet() {
-  const val = document.getElementById('bet-input').value;
-  if (!val || +val <= 0) {
-    document.getElementById('bet-msg').textContent = 'Zadej kladnou částku.';
-    return;
-  }
-  const btn = document.querySelector('.btn');
-  btn.disabled = true;
-  btn.textContent = 'Ukládám…';
-
-  const res = await api({ action: 'bet', token, amount: val });
-  if (res.error) {
-    document.getElementById('bet-msg').textContent = res.error;
-    btn.disabled = false;
-    btn.textContent = 'Potvrdit';
-  } else {
-    location.reload();
-  }
+  const val = $('bi').value;
+  if (!val || +val <= 0) { showAlert('bm','Zadej kladnou částku.'); return; }
+  const btn = document.querySelector('.btn-gold');
+  btn.disabled = true; btn.textContent = '…';
+  try {
+    const r = await setBet(token, val);
+    if (r.error) { showAlert('bm', r.error); btn.disabled=false; btn.textContent='Potvrdit'; }
+    else location.reload();
+  } catch(e) { showAlert('bm', e.message); btn.disabled=false; }
 }
 
-function renderMain(data) {
-  const { canTip, races } = data;
+function renderMain({ canTip, nowHour, races }) {
   const now = new Date();
-  const hours = now.getHours();
-  const mins = now.getMinutes();
-
-  let statusHtml = '';
+  let statusHtml;
   if (canTip) {
-    const secLeft = (12 * 3600) - (hours * 3600 + mins * 60 + now.getSeconds());
-    const hLeft = Math.floor(secLeft / 3600);
-    const mLeft = Math.floor((secLeft % 3600) / 60);
-    statusHtml = `<div class="status-bar open">
-      <div class="dot green"></div>
-      Tipování otevřeno – zavírá se za <span class="countdown" id="cdwn">${hLeft}h ${mLeft}m</span>
-    </div>`;
+    const s = (12*3600)-(now.getHours()*3600+now.getMinutes()*60+now.getSeconds());
+    const h=Math.floor(s/3600), m=Math.floor((s%3600)/60);
+    statusHtml = `<div class="status open"><div class="dot g"></div><span>Tipování otevřeno · zavírá za <strong id="cdwn">${h?h+'h ':''  }${m}m</strong></span></div>`;
   } else {
-    statusHtml = `<div class="status-bar closed">
-      <div class="dot red"></div>
-      Tipování uzavřeno (po 12:00). Výsledky se zobrazí jakmile je admin zadá.
-    </div>`;
+    statusHtml = `<div class="status closed"><div class="dot r"></div><span>Tipování uzavřeno (po 12:00)</span></div>`;
   }
 
-  let racesHtml = '';
-  if (races.length === 0) {
-    racesHtml = `<div class="no-races">
-      ${hours < 10
-        ? '🕙 Admin zadá rozjízdy do 10:00.'
-        : 'Dnes nejsou naplánované žádné rozjízdy.'}
-    </div>`;
+  let racesHtml;
+  if (!races.length) {
+    racesHtml = `<div class="empty"><div class="ico">${nowHour<10?'🕙':'🌊'}</div><p>${nowHour<10?'Admin zadá rozjízdy do 10:00.':'Dnes nejsou naplánované žádné rozjízdy.'}</p></div>`;
   } else {
-    racesHtml = races.map(item => {
-      const { race, tip, result, points } = item;
-      const opts = Array.from({length: 16}, (_, i) => i + 1)
-        .map(n => `<option value="${n}" ${tip === n ? 'selected' : ''}>${n}. místo</option>`)
-        .join('');
-
-      const resultRow = result
-        ? `<div class="result-row">
-            <span><span class="lbl">Tipoval jsi:</span> ${pos(tip)}</span>
-            <span><span class="lbl">Výsledek:</span> ${pos(result)}</span>
-           </div>`
-        : tip ? `<div class="result-row"><span><span class="lbl">Tipoval jsi:</span> ${pos(tip)}</span></div>` : '';
-
-      return `
-        <div class="race-item">
-          <div class="race-header">
-            <div class="race-title">Rozjízda ${race.num}</div>
-            ${pointsChip(points)}
-          </div>
-          <div class="tip-row">
-            <label>Tvoje tipované pořadí:</label>
-            <select class="pos-select" id="sel-${race.id}" onchange="saveTip('${race.id}', this)" ${canTip ? '' : 'disabled'}>
-              <option value="">— vyber —</option>
-              ${opts}
-            </select>
-            <span class="save-msg" id="msg-${race.id}"></span>
-          </div>
-          ${resultRow}
-        </div>`;
+    racesHtml = races.map(({race,tip,result,points}) => {
+      const opts = ['<option value="">— vyber pořadí —</option>',
+        ...Array.from({length:16},(_,i)=>i+1).map(n=>`<option value="${n}"${tip===n?' selected':''}>${n}. místo</option>`)
+      ].join('');
+      const resLine = result!=null
+        ? `<div class="ri-res"><span><span class="l">Tipoval jsi: </span><strong>${tip??'—'}. místo</strong></span><span><span class="l">Výsledek: </span><strong>${result}. místo</strong></span></div>`
+        : tip!=null ? `<div class="ri-res"><span><span class="l">Tipoval jsi: </span><strong>${tip}. místo</strong></span></div>` : '';
+      return `<div class="ri">
+        <div class="rihdr"><span class="rinum">Rozjízda ${race.num}</span>${chip(points)}</div>
+        <div class="pr"><span class="pl">Tvoje pořadí:</span>
+          <select class="ps" id="s${race.id}" onchange="saveTip('${race.id}',this)" ${canTip?'':'disabled'}>${opts}</select>
+          <span class="si" id="ind${race.id}"></span>
+        </div>${resLine}
+      </div>`;
     }).join('');
   }
 
-  // Score summary
-  const totalPts = data.races.reduce((s, r) => s + (r.points || 0), 0);
-  const tipped = data.races.filter(r => r.tip).length;
-  const exact = data.races.filter(r => r.points === 3).length;
-
+  const p=races.reduce((s,r)=>s+(r.points||0),0), t=races.filter(r=>r.tip!=null).length, e=races.filter(r=>r.points===3).length;
   render(`
-    <a class="leaderboard-link" href="leaderboard.html">🏆 Zobrazit celkové pořadí</a>
-
+    <a href="leaderboard.html" class="nav-link">🏆 Celkový žebříček →</a>
     ${statusHtml}
-
-    <div class="card">
-      <h2>Dnešní rozjízdy</h2>
-      ${racesHtml}
-    </div>
-
-    <div class="card">
-      <h2>Dnešní skóre</h2>
-      <div class="score-grid">
-        <div class="score-item">
-          <div class="score-num">${totalPts}</div>
-          <div class="score-lbl">bodů dnes</div>
-        </div>
-        <div class="score-item">
-          <div class="score-num">${tipped}</div>
-          <div class="score-lbl">tipů zadáno</div>
-        </div>
-        <div class="score-item">
-          <div class="score-num">${exact}</div>
-          <div class="score-lbl">přesných tipů</div>
-        </div>
+    <div class="card"><div class="ctitle">⛵ Dnešní rozjízdy</div>${racesHtml}</div>
+    <div class="card"><div class="ctitle">📊 Skóre za dnešek</div>
+      <div class="sg">
+        <div class="sc"><div class="sn">${p}</div><div class="sl">bodů</div></div>
+        <div class="sc"><div class="sn">${t}</div><div class="sl">tipů</div></div>
+        <div class="sc"><div class="sn">${e}</div><div class="sl">přesně</div></div>
       </div>
-    </div>
-  `);
-
-  if (canTip) startCountdown();
+    </div>`);
+  if (canTip) startCdwn();
 }
 
 async function saveTip(raceId, sel) {
-  const pos = sel.value;
-  if (!pos) return;
-  sel.disabled = true;
-  const msg = document.getElementById('msg-' + raceId);
-  msg.textContent = 'Ukládám…';
-  msg.style.color = 'var(--muted)';
-
-  const res = await api({ action: 'tip', token, race: raceId, pos });
-  sel.disabled = false;
-  if (res.error) {
-    msg.textContent = res.error;
-    msg.style.color = 'var(--red)';
-  } else {
-    msg.textContent = '✓ Uloženo';
-    msg.style.color = 'var(--green)';
-    setTimeout(() => { msg.textContent = ''; }, 2500);
-  }
+  if (!sel.value) return;
+  const ind = $('ind'+raceId);
+  ind.textContent='…'; ind.style.color='var(--muted)'; sel.disabled=true;
+  try {
+    const r = await setTip(token, raceId, sel.value);
+    sel.disabled=false;
+    if (r.error) { ind.textContent='✗ '+r.error; ind.style.color='var(--red)'; }
+    else { ind.textContent='✓ Uloženo'; ind.style.color='var(--green)'; setTimeout(()=>ind.textContent='',2500); }
+  } catch(e) { sel.disabled=false; ind.textContent='✗'; ind.style.color='var(--red)'; }
 }
 
-function startCountdown() {
+function startCdwn() {
   setInterval(() => {
-    const el = document.getElementById('cdwn');
-    if (!el) return;
-    const now = new Date();
-    const secs = (12 * 3600) - (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds());
-    if (secs <= 0) { location.reload(); return; }
-    const h = Math.floor(secs / 3600);
-    const m = Math.floor((secs % 3600) / 60);
-    const s = secs % 60;
-    el.textContent = h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
-  }, 1000);
+    const el=$('cdwn'); if(!el) return;
+    const now=new Date(), s=(12*3600)-(now.getHours()*3600+now.getMinutes()*60+now.getSeconds());
+    if(s<=0){location.reload();return;}
+    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;
+    el.textContent=h?`${h}h ${m}m`:`${m}m ${String(ss).padStart(2,'0')}s`;
+  },1000);
 }
 
+function showAlert(id, msg) { const e=$(id); e.textContent=msg; e.classList.remove('hidden'); }
 init();
 </script>
 </body>

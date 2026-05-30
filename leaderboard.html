@@ -3,252 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pumps 2026 – Žebříček</title>
+<title>⛵ Pumps 2026 – Žebříček</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #1a3a5c;
-    --blue-light: #2a5a8c;
-    --gold: #f0a500;
-    --green: #2d8a4e;
-    --bg: #f4f7fb;
-    --card: #fff;
-    --text: #1a1a2e;
-    --muted: #6b7280;
-    --border: #e2e8f0;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  header {
-    background: var(--blue);
-    color: #fff;
-    padding: 20px 24px 16px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.6rem; font-weight: 800; }
-  header .sub { font-size: 0.85rem; opacity: 0.7; margin-top: 2px; }
-
-  main { max-width: 600px; margin: 0 auto; padding: 20px 16px 60px; }
-
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.08);
-  }
-
-  .pot-banner {
-    text-align: center;
-    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
-    color: #fff;
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-  .pot-banner .amount {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: -1px;
-  }
-  .pot-banner .lbl { font-size: 0.82rem; opacity: 0.8; margin-top: 2px; }
-
-  .scoring-info {
-    background: #f0f7ff;
-    border: 1.5px solid #cce0ff;
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 0.83rem;
-    color: #1a3a5c;
-    margin-bottom: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
-  .scoring-info span { display: flex; align-items: center; gap: 5px; }
-
-  .crew-card {
-    display: flex;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-  }
-  .crew-card:last-child { border-bottom: none; }
-
-  .rank {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 1rem;
-    flex-shrink: 0;
-    background: #e9ecef;
-    color: var(--muted);
-  }
-  .rank.r1 { background: #ffd700; color: #7a5200; }
-  .rank.r2 { background: #c0c0c0; color: #3a3a3a; }
-  .rank.r3 { background: #cd7f32; color: #fff; }
-
-  .crew-info { flex: 1; min-width: 0; }
-  .crew-name { font-weight: 700; font-size: 0.97rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .crew-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; display: flex; gap: 10px; flex-wrap: wrap; }
-
-  .crew-pts { text-align: right; flex-shrink: 0; }
-  .pts-num { font-size: 1.6rem; font-weight: 900; color: var(--blue); line-height: 1; }
-  .pts-lbl { font-size: 0.7rem; color: var(--muted); }
-
-  .progress-bar {
-    height: 4px;
-    background: var(--border);
-    border-radius: 99px;
-    margin-top: 6px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--blue-light), var(--gold));
-    border-radius: 99px;
-    transition: width .5s ease;
-  }
-
-  .spinner {
-    display: flex;
-    justify-content: center;
-    padding: 60px;
-  }
-  .spin {
-    width: 40px; height: 40px;
-    border: 4px solid var(--border);
-    border-top-color: var(--blue);
-    border-radius: 50%;
-    animation: s .8s linear infinite;
-  }
-  @keyframes s { to { transform: rotate(360deg); } }
-
-  .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--blue);
-    font-size: 0.88rem;
-    font-weight: 600;
-    text-decoration: none;
-    margin-bottom: 16px;
-    padding: 8px 14px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.08);
-  }
-  .back-btn:hover { background: var(--bg); }
-
-  .refresh-btn {
-    float: right;
-    background: none;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 5px 12px;
-    font-size: 0.82rem;
-    cursor: pointer;
-    color: var(--muted);
-    font-weight: 600;
-  }
-  .refresh-btn:hover { background: var(--bg); }
-
-  .empty { text-align: center; padding: 30px; color: var(--muted); font-size: 0.9rem; }
-  .updated { font-size: 0.75rem; color: var(--muted); text-align: right; margin-bottom: 8px; }
+:root{--deep:#091622;--navy:#183558;--ocean:#1e5fa8;--gold:#c8a44a;--gold2:#f0d078;--foam:#ebf4f9;--white:#fff;--text:#162030;--muted:#647589;--border:#ccdde8;--sh:0 4px 18px rgba(9,22,34,.12);--r:16px;--rs:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--foam);color:var(--text);min-height:100vh}
+.hdr{background:linear-gradient(160deg,var(--deep),var(--navy) 55%,#204878);color:#fff;padding:32px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hdr-icon{font-size:2.8rem;display:block;margin-bottom:8px;animation:bob 4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+.hdr h1{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:900;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.hdr .sub{font-size:.8rem;opacity:.6;letter-spacing:3px;text-transform:uppercase;margin-top:5px}
+.wave{position:absolute;bottom:-1px;left:0;width:100%;line-height:0}
+.wave svg{display:block;width:100%}
+main{max-width:620px;margin:-26px auto 0;padding:0 14px 70px;position:relative;z-index:1}
+.card{background:var(--white);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh)}
+.ctitle{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.pot-banner{background:linear-gradient(135deg,var(--deep),var(--navy));color:#fff;border-radius:var(--r);padding:26px;text-align:center;margin-bottom:14px;box-shadow:0 8px 32px rgba(9,22,34,.2)}
+.pot-amt{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--gold);line-height:1}
+.pot-lbl{font-size:.78rem;opacity:.65;margin-top:6px;letter-spacing:1.5px;text-transform:uppercase}
+.legend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#e6effe;border:1.5px solid #b0c8f0;border-radius:var(--rs);padding:10px 14px;font-size:.82rem;color:#1a2e7a;margin-bottom:14px}
+.lb-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.lb-item:last-child{border-bottom:none}
+.lb-rank{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;flex-shrink:0;background:var(--foam);color:var(--muted)}
+.lb-rank.r1{background:linear-gradient(135deg,#ffd700,#e09800);color:#fff}
+.lb-rank.r2{background:linear-gradient(135deg,#d8d8d8,#a0a0a0);color:#fff}
+.lb-rank.r3{background:linear-gradient(135deg,#cd7f32,#9a5820);color:#fff}
+.lb-info{flex:1;min-width:0}
+.lb-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-meta{font-size:.76rem;color:var(--muted);margin-top:2px}
+.lb-right{text-align:right;flex-shrink:0}
+.lb-pts{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--navy);line-height:1}
+.lb-pl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.prog{height:4px;background:var(--border);border-radius:99px;margin-top:5px;overflow:hidden}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--ocean),var(--gold));border-radius:99px}
+.btn-outline{background:none;border:2px solid var(--border);color:var(--navy);font-weight:700;border-radius:10px;padding:7px 13px;font-size:.82rem;cursor:pointer}
+.btn-outline:hover{border-color:var(--ocean);background:var(--foam)}
+.spin-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted);font-size:.87rem}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--ocean);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-size:.88rem;font-weight:700;text-decoration:none;background:#fff;border-radius:10px;padding:8px 14px;box-shadow:var(--sh);margin-bottom:14px}
+.back:hover{background:var(--foam)}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>🏆 Žebříček</h1>
-  <div class="sub">Pumps 2026 – Tipovačka</div>
+<header class="hdr">
+  <span class="hdr-icon">🏆</span>
+  <h1>Žebříček</h1>
+  <div class="sub">Pumps 2026 · Tipovačka</div>
+  <div class="wave"><svg viewBox="0 0 1440 54" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,27 C240,52 480,2 720,27 C960,52 1200,2 1440,27 L1440,54 L0,54 Z" fill="#ebf4f9"/></svg></div>
 </header>
 
 <main>
-  <a class="back-btn" href="javascript:history.back()">← Zpět</a>
-
-  <div id="app">
-    <div class="spinner"><div class="spin"></div></div>
-  </div>
+  <a href="javascript:history.back()" class="back">← Zpět</a>
+  <div id="app"><div class="spin-wrap"><div class="spinner"></div><span>Načítám žebříček…</span></div></div>
 </main>
 
 <script src="config.js"></script>
+<script src="db.js"></script>
 <script>
 async function load() {
-  const app = document.getElementById('app');
-
-  const data = await fetch(CFG.api + '?action=board').then(r => r.json());
-
-  if (data.error) {
-    app.innerHTML = `<div style="color:red;padding:20px">${data.error}</div>`;
-    return;
-  }
-
-  const { board, pot } = data;
-  const maxPts = board[0]?.pts || 1;
-
-  let potHtml = '';
-  if (pot > 0) {
-    potHtml = `<div class="pot-banner">
-      <div class="amount">${pot.toLocaleString('cs-CZ')} Kč</div>
-      <div class="lbl">celková výše sázek v potu</div>
-    </div>`;
-  }
-
-  const scoringHtml = `<div class="scoring-info">
-    <strong>Bodování:</strong>
-    <span>🎯 Přesně = 3 body</span>
-    <span>±1 místo = 1 bod</span>
-    <span>Jinak = 0 bodů</span>
-  </div>`;
-
-  const rows = board.map((c, i) => {
-    const rank = i + 1;
-    const rankCls = rank <= 3 ? 'r' + rank : '';
-    const pct = maxPts > 0 ? Math.round((c.pts / maxPts) * 100) : 0;
-
-    return `<div class="crew-card">
-      <div class="rank ${rankCls}">${rank}</div>
-      <div class="crew-info">
-        <div class="crew-name">${c.name}</div>
-        <div class="crew-meta">
-          <span>⛵ ${c.boat}</span>
-          ${c.bet ? `<span>💰 ${c.bet.toLocaleString('cs-CZ')} Kč</span>` : ''}
-          ${c.tipped > 0 ? `<span>🎯 ${c.exact}× přesně</span>` : '<span>žádné tipy</span>'}
+  try {
+    const d = await getLeaderboard();
+    const app = document.getElementById('app');
+    if (d.error) { app.innerHTML=`<div style="color:var(--red);padding:20px">${d.error}</div>`; return; }
+    const max=d.board[0]?.pts||1;
+    const now=new Date().toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
+    const pot=d.pot>0?`<div class="pot-banner"><div class="pot-amt">${d.pot.toLocaleString('cs-CZ')} Kč</div><div class="pot-lbl">celková výše sázek v potu</div></div>`:'';
+    const legend=`<div class="legend"><strong>Bodování:</strong><span>🎯 Přesně = <strong>3 body</strong></span><span>±1 místo = <strong>1 bod</strong></span><span>Jinak = <strong>0 bodů</strong></span></div>`;
+    const rows=d.board.map((c,i)=>{
+      const rank=i+1,cls=rank<=3?' r'+rank:'',pct=Math.round((c.pts/max)*100);
+      return `<div class="lb-item"><div class="lb-rank${cls}">${rank}</div>
+        <div class="lb-info"><div class="lb-name">${c.name}</div>
+          <div class="lb-meta">⛵ ${c.boat}${c.bet?' · 💰 '+Number(c.bet).toLocaleString('cs-CZ')+' Kč':''}${c.tipped>0?' · 🎯 '+c.exact+'× přesně':''}</div>
+          <div class="prog"><div class="prog-f" style="width:${pct}%"></div></div>
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${pct}%"></div>
-        </div>
+        <div class="lb-right"><div class="lb-pts">${c.pts}</div><div class="lb-pl">bodů</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:1px">${c.tipped} tipů</div>
+        </div></div>`;
+    }).join('');
+    app.innerHTML=pot+legend+`<div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="ctitle" style="margin:0">Průběžné pořadí</div>
+        <button class="btn-outline" onclick="load()">↻ Obnovit</button>
       </div>
-      <div class="crew-pts">
-        <div class="pts-num">${c.pts}</div>
-        <div class="pts-lbl">bodů</div>
-      </div>
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:10px;text-align:right">Aktualizováno ${now}</div>
+      ${d.board.length?rows:'<p style="color:var(--muted);font-size:.9rem;text-align:center;padding:20px">Tipování teprve začíná.</p>'}
     </div>`;
-  }).join('');
-
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
-
-  app.innerHTML = potHtml + scoringHtml + `
-    <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-        <strong style="font-size:.95rem;color:var(--blue)">Průběžné pořadí</strong>
-        <button class="refresh-btn" onclick="location.reload()">↻ Obnovit</button>
-      </div>
-      <div class="updated">Aktualizováno v ${timeStr}</div>
-      ${board.length === 0 ? '<div class="empty">Zatím žádná data.</div>' : rows}
-    </div>`;
+  } catch(e) { document.getElementById('app').innerHTML=`<div style="color:red;padding:20px">${e.message}</div>`; }
 }
-
 load();
 </script>
 </body>
